@@ -482,6 +482,7 @@ public final class Expression: CustomStringConvertible {
         symbols[.infix("*")] = { $0[0] * $0[1] }
         symbols[.infix("/")] = { $0[0] / $0[1] }
         symbols[.infix("%")] = { fmod($0[0], $0[1]) }
+        symbols[.infix("^")] = { pow($0[0], $0[1]) }
 
         // prefix operators
         symbols[.prefix("-")] = { -$0[0] }
@@ -578,7 +579,7 @@ private extension Expression {
     static let operatorPrecedence: [String: (precedence: Int, isRightAssociative: Bool)] = {
         var precedences = [
             "[]": 100,
-            "<<": 2, ">>": 2, ">>>": 2, // bitshift
+            "<<": 2, ">>": 2, ">>>": 2, "^": 2, // bitshift // exponent
             "*": 1, "/": 1, "%": 1, "&": 1, // multiplication
             // +, -, |, ^, etc: 0 (also the default)
             "..": -1, "...": -1, "..<": -1, // range formation
